@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 
 const Contact = () => {
   return (
+    <>
+   
     <div className="bg-gray-100 min-h-screen">
     
       {/* Contact Section */}
@@ -83,6 +85,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

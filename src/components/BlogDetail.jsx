@@ -11,19 +11,20 @@ const BlogDetail = () => {
 
   if (!blog) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen  flex items-center justify-center bg-gray-100">
         <p className="text-xl font-semibold text-gray-700">Blog not found.</p>
       </div>
     );
   }
 
   return (
+    <> 
     <div className="bg-gray-100 min-h-screen">
      
       {/* Blog Detail */}
       <div>
         {/* Full-Width Blog Image */}
-        <div className="w-[80%] m-auto">
+        <div className="w-[80%] m-auto sticky">
           <img
             src={blog.image || defaultImg}
             alt={blog.title}
@@ -63,6 +64,7 @@ const BlogDetail = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
