@@ -93,29 +93,30 @@ const Home = () => {
           {filteredBlogs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredBlogs.map((blog) => (
-                <div key={blog.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                  <img src={blog.image || defaultImg} alt={blog.title} className="w-full h-40 object-cover" />
-                  <div className="p-4">
-                    <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
-                    <p className="text-sm text-gray-600 mb-4">Author: {blog.author}</p>
-                    <p className="text-sm text-gray-700 mb-4">
-                      {blog.content.slice(0, 100)}...
-                      <span onClick={() => navigate(`/details/${blog.id}`)} className="text-blue-500 cursor-pointer hover:underline ml-2">
-                        Read More
-                      </span>
-                    </p>
-                    {loggedInUser?.name === blog.author && (
-                      <div className="flex justify-between">
-                        <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-500 hover:underline">
-                          Edit
-                        </button>
-                        <button onClick={() => handleDelete(blog.id)} className="text-red-500 hover:underline">
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+               <div key={blog.id} className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
+               <img src={blog.image || defaultImg} alt={blog.title} className="w-full h-40 object-cover" />
+               <div className="p-4 flex flex-col flex-grow">
+                 <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
+                 <p className="text-sm text-gray-600 mb-2">Author: {blog.author}</p>
+                 <p className="text-sm text-gray-700 flex-grow">
+                   {blog.content.slice(0, 100)}...
+                   <span onClick={() => navigate(`/details/${blog.id}`)} className="text-blue-500 cursor-pointer hover:underline ml-2">
+                     Read More
+                   </span>
+                 </p>
+                 {loggedInUser?.name === blog.author && (
+                   <div className="border-t mt-4 pt-2 flex justify-between">
+                     <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-500 hover:underline">
+                       Edit
+                     </button>
+                     <button onClick={() => handleDelete(blog.id)} className="text-red-500 hover:underline">
+                       Delete
+                     </button>
+                   </div>
+                 )}
+               </div>
+             </div>
+             
               ))}
             </div>
           ) : (
