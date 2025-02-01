@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import defaultImg from "../assets/default.jpg"; // Default image import
+import defaultImg from "../assets/default.jpg"; 
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -24,7 +24,7 @@ const BlogDetail = () => {
       {/* Blog Detail */}
       <div>
         {/* Full-Width Blog Image */}
-        <div className="w-[80%] m-auto sticky">
+        <div className="w-[80%] m-auto">
           <img
             src={blog.image || defaultImg}
             alt={blog.title}

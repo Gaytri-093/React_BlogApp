@@ -13,10 +13,9 @@ const Home = () => {
 
   const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-  // Filter blogs by category or "My Blogs"
+//checking author
   const filteredBlogs = showMyBlogs
-    ? blogs.filter((blog) => blog.author === loggedInUser?.username)
+    ? blogs.filter((blog) => blog.author === loggedInUser?.name)
     : selectedCategory === "All Categories"
     ? blogs
     : blogs.filter((blog) => blog.category === selectedCategory);
@@ -43,7 +42,7 @@ const Home = () => {
 
       {/* Content Section */}
       <div className="flex flex-col md:flex-row p-6 gap-6">
-        {/* Sidebar (Sticky) */}
+        {/* Sidebar */}
         <div className="w-full md:w-1/4 bg-white shadow-md rounded-lg p-4 md:sticky top-16 h-max">
           <button
             onClick={() => navigate("/create")}
@@ -69,7 +68,7 @@ const Home = () => {
               {isCategoriesVisible ? "▲" : "▼"}
             </button>
           </h2>
-          {/* Categories List - No extra whitespace */}
+          {/* Categories List */}
           <div className={`space-y-2 ${isCategoriesVisible ? "block" : "hidden md:block"}`}>
             {categories.map((category) => (
               <button
@@ -105,7 +104,7 @@ const Home = () => {
                         Read More
                       </span>
                     </p>
-                    {loggedInUser?.username === blog.author && (
+                    {loggedInUser?.name === blog.author && (
                       <div className="flex justify-between">
                         <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-500 hover:underline">
                           Edit

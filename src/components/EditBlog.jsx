@@ -56,7 +56,7 @@ const EditBlog = () => {
     alert("Blog updated successfully!");
     navigate("/");
   };
-
+ nm
   return (
     <div className="h-screen flex justify-center items-start bg-gray-100 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl relative mt-2">

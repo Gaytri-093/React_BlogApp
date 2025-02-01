@@ -10,17 +10,17 @@ const Login = () => {
     password: "",
   });
 
-  // Handle input change
+  //  input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  //  form submission
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Get stored user data from localStorage
+    //  stored user data from localStorage
     const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
 
     if (!storedUser || storedUser.email !== formData.email || storedUser.password !== formData.password) {

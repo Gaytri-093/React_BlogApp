@@ -11,13 +11,13 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  // Handle input change
+  // input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  // form submission
   const handleSignup = (e) => {
     e.preventDefault();
 
