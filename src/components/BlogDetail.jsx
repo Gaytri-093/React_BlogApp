@@ -19,7 +19,7 @@ const BlogDetail = () => {
 
   return (
     <> 
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen pt-2">
      
       {/* Blog Detail */}
       <div>
