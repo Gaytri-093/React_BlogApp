@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const categories = ["Music", "Movies", "Sports", "Technology", "Education"];
 
@@ -7,26 +8,22 @@ const EditBlog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  const [formData, setFormData] = useState({
-    title: "",
-    author: "",
-    content: "",
-    category: "",
-    image: "",
-  });
+  const [formData, setFormData] = useState(null); 
 
   useEffect(() => {
     const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-    const blogToEdit = blogs.find((blog) => blog.id === id);
+    const blogToEdit = blogs.find((blog) => String(blog.id) === String(id));
 
     if (!blogToEdit) {
-      alert("Blog not found!");
-      navigate("/");
+      toast.error("Blog not found!");
+      setTimeout(() => navigate("/"), 3000);
       return;
     }
 
     setFormData(blogToEdit);
   }, [id, navigate]);
+
+  if (!formData) return <p>Loading...</p>; 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,18 +46,22 @@ const EditBlog = () => {
 
     const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
     const updatedBlogs = blogs.map((blog) =>
-      blog.id === id ? { ...blog, ...formData } : blog
+      String(blog.id) === String(id) ? { ...blog, ...formData } : blog
     );
 
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
-    alert("Blog updated successfully!");
-    navigate("/");
+    toast.success("Blog updated successfully!");
+    setTimeout(() => navigate("/"), 3000);
   };
- nm
+
   return (
+    <>
+     <ToastContainer
+      position="top-center"
+      reverseOrder={false}
+       />
     <div className="h-screen flex justify-center items-start bg-gray-100 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl relative mt-2">
-        {/* Close Button */}
         <button
           onClick={() => navigate("/")}
           className="absolute top-4 right-4 text-red-500 text-xl font-bold"
@@ -71,7 +72,6 @@ const EditBlog = () => {
         <h1 className="text-2xl font-bold mb-6">Edit Blog</h1>
 
         <form onSubmit={handleUpdate}>
-          {/* Title */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Title</label>
             <input
@@ -84,7 +84,6 @@ const EditBlog = () => {
             />
           </div>
 
-          {/* Author */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Author</label>
             <input
@@ -94,11 +93,10 @@ const EditBlog = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
               required
-              readOnly // Author should not be editable
+              readOnly
             />
           </div>
 
-          {/* Content */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Content</label>
             <textarea
@@ -111,7 +109,6 @@ const EditBlog = () => {
             />
           </div>
 
-          {/* Category */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Category</label>
             <select
@@ -130,7 +127,6 @@ const EditBlog = () => {
             </select>
           </div>
 
-          {/* Image Upload */}
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Image</label>
             <input
@@ -148,7 +144,6 @@ const EditBlog = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
@@ -158,6 +153,7 @@ const EditBlog = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// import { toast, Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const categories = ["Music", "Movies", "Sports", "Technology", "Education"];
 
@@ -47,7 +50,7 @@ const AddBlog = () => {
     e.preventDefault();
 
     if (!formData.author) {
-      alert("Author is required! Please log in first.");
+      toast.error("Author is required! Please log in first.");
       return;
     }
 
@@ -55,12 +58,19 @@ const AddBlog = () => {
     const updatedBlogs = [...blogs, newBlog];
 
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
-    alert("Blog created successfully!");
-    navigate("/");
+    toast.success("Blog created successfully!");
+    setTimeout(() => navigate("/"), 3000);
+
   };
 
   return (
-    <div className="h-auto flex justify-center items-start bg-gray-100 p-4">
+   <>
+    <ToastContainer
+  position="top-center"
+  reverseOrder={false}
+   />
+     
+     <div className="h-auto flex justify-center items-start bg-gray-100 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl relative mt-2">
         {/* Close Button */}
         <button
@@ -159,6 +169,8 @@ const AddBlog = () => {
         </form>
       </div>
     </div>
+   
+   </>
   );
 };
 

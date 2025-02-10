@@ -22,13 +22,13 @@ const Navbar = () => {
 
         {/* Navigation Links (Right-aligned) */}
         <div className="flex items-center space-x-6">
-          <Link to="/" className="text-gray-600 hover:text-blue-500">
+          <Link to="/" className="text-gray-600 hover:text-blue-700 hover:underline">
             Home
           </Link>
-          <Link to="/about" className="text-gray-600 hover:text-blue-500">
+          <Link to="/about" className="text-gray-600 hover:text-blue-700 hover:underline">
             About
           </Link>
-          <Link to="/contact" className="text-gray-600 hover:text-blue-500">
+          <Link to="/contact" className="text-gray-600 hover:text-blue-700 hover:underline">
             Contact
           </Link>
 

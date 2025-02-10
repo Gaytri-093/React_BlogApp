@@ -10,27 +10,35 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [isCategoriesVisible, setIsCategoriesVisible] = useState(false);
   const [showMyBlogs, setShowMyBlogs] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [blogToDelete, setBlogToDelete] = useState(null);
 
   const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-//checking author
+
   const filteredBlogs = showMyBlogs
     ? blogs.filter((blog) => blog.author === loggedInUser?.name)
     : selectedCategory === "All Categories"
     ? blogs
     : blogs.filter((blog) => blog.category === selectedCategory);
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are You Sure to Delete?");
-    if (confirmDelete) {
-      const updatedBlogs = blogs.filter((blog) => blog.id !== id);
+  const handleDeleteClick = (id) => {
+    setBlogToDelete(id);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (blogToDelete) {
+      const updatedBlogs = blogs.filter((blog) => blog.id !== blogToDelete);
       localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
+      setShowDeleteModal(false);
+      setBlogToDelete(null);
       window.location.reload();
     }
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
       <div className="relative">
         <img src={blogImg} alt="Hero Background" className="w-full h-72 object-cover" />
@@ -46,15 +54,15 @@ const Home = () => {
         <div className="w-full md:w-1/4 bg-white shadow-md rounded-lg p-4 md:sticky top-16 h-max">
           <button
             onClick={() => navigate("/create")}
-            className="w-full mb-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            className="w-full mb-4 bg-blue-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-500"
           >
             Create Blog
           </button>
           <button
             onClick={() => setShowMyBlogs(!showMyBlogs)}
-            className={`w-full mb-4 px-4 py-2 rounded-lg ${
-              showMyBlogs ? "bg-green-500 text-white" : "bg-gray-200 text-gray-700"
-            } hover:bg-green-400 hover:text-white`}
+            className={`w-full mb-4 px-4 py-2 rounded-lg font-medium ${
+              showMyBlogs ? "bg-green-700 text-white" : "bg-gray-200 text-gray-700"
+            } hover:bg-blue-500`}
           >
             My Blogs
           </button>
@@ -63,23 +71,23 @@ const Home = () => {
             Categories
             <button
               onClick={() => setIsCategoriesVisible(!isCategoriesVisible)}
-              className="text-gray-700 focus:outline-none md:hidden"
+              className="text-gray-700 focus:outline-none md:hidden hover:bg-blue-500"
             >
               {isCategoriesVisible ? "▲" : "▼"}
             </button>
           </h2>
-          {/* Categories List */}
+
           <div className={`space-y-2 ${isCategoriesVisible ? "block" : "hidden md:block"}`}>
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => {
                   setSelectedCategory(category);
-                  setShowMyBlogs(false); // Reset "My Blogs" when changing category
+                  setShowMyBlogs(false);
                 }}
-                className={`block w-full text-left px-4 py-2 rounded-lg ${
-                  selectedCategory === category ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-                } hover:bg-blue-400 hover:text-white`}
+                className={`block w-full text-left px-4 py-2 rounded-lg font-medium ${
+                  selectedCategory === category ? "bg-blue-700 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-500"
+                } `}
               >
                 {category}
               </button>
@@ -93,37 +101,70 @@ const Home = () => {
           {filteredBlogs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredBlogs.map((blog) => (
-               <div key={blog.id} className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
-               <img src={blog.image || defaultImg} alt={blog.title} className="w-full h-40 object-cover" />
-               <div className="p-4 flex flex-col flex-grow">
-                 <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
-                 <p className="text-sm text-gray-600 mb-2">Author: {blog.author}</p>
-                 <p className="text-sm text-gray-700 flex-grow">
-                   {blog.content.slice(0, 100)}...
-                   <span onClick={() => navigate(`/details/${blog.id}`)} className="text-blue-500 cursor-pointer hover:underline ml-2">
-                     Read More
-                   </span>
-                 </p>
-                 {loggedInUser?.name === blog.author && (
-                   <div className="border-t mt-4 pt-2 flex justify-between">
-                     <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-500 hover:underline">
-                       Edit
-                     </button>
-                     <button onClick={() => handleDelete(blog.id)} className="text-red-500 hover:underline">
-                       Delete
-                     </button>
-                   </div>
-                 )}
-               </div>
-             </div>
-             
+                <div key={blog.id} className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
+                  <img src={blog.image || defaultImg} alt={blog.title} className="w-full h-40 object-cover" />
+                  <div className="p-4 flex flex-col flex-grow">
+                    <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
+                    <p className="text-sm text-gray-600 mb-2">Author: {blog.author}</p>
+                    <p className="text-sm text-gray-700 flex-grow">
+                      {blog.content.slice(0, 100)}...
+                      <span
+                        onClick={() => navigate(`/details/${blog.id}`)}
+                        className="text-blue-700 cursor-pointer hover:underline ml-2"
+                      >
+                        Read More
+                      </span>
+                    </p>
+                    {loggedInUser?.name === blog.author && (
+                      <div className="border-t mt-4 pt-2 flex justify-between">
+                        <button
+                          onClick={() => navigate(`/edit/${blog.id}`)}
+                          className="text-orange-600 hover:underline"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(blog.id)}
+                          className="text-red-600 hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-600">{showMyBlogs ? "No blogs created by you yet." : "No blogs available. Create one!"}</p>
+            <p className="text-gray-600">
+              {showMyBlogs ? "No blogs created by you yet." : "No blogs available. Create one!"}
+            </p>
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Are you sure you want to delete?</h2>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -12,11 +12,11 @@ import SignUp from "./components/SignUp";
 
 const Layout = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/signup"]; // Hide navbar for these routes
+  const hideNavbarRoutes = ["/login", "/signup"]; 
 
   return (
     <>
-      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}  
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
