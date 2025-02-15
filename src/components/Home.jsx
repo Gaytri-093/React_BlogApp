@@ -222,7 +222,7 @@ const HomePage = () => {
             </ul>
           </div>
         {/* Image Section */}
-          <div className="bg-white shadow-lg rounded-xl p-4 w-72">
+          <div className="bg-white shadow-lg rounded-xl p-6 py-8 w-72">
       <img
         src={FooterImg} 
         alt="Future of Work"

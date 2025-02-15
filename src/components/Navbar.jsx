@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
         <h1 className="text-xl font-bold text-gray-800">
-          <Link to="/">BLOG</Link>
+          <Link to="/"><h2 className="text-2xl font-bold">MyBlog<span className="text-blue-500">•</span></h2></Link>
         </h1>
 
         {/* Navigation Links */}
