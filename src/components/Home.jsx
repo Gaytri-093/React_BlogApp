@@ -126,52 +126,58 @@ const HomePage = () => {
       </section>
 
       <section ref={blogSectionRef} className="px-6 lg:px-20 py-10">
-        <h2 className="text-4xl font-bold mb-6 text-center">
-          {showMyBlogs ? "My Blogs" : selectedCategory === "All Categories" ? "Latest Blogs" : `${selectedCategory} Blogs`}
-        </h2>
-        {filteredBlogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredBlogs.map((blog) => (
-              <div
-                key={blog.id}
-                className="relative bg-white shadow-lg rounded-xl p-6 flex flex-col gap-3 transition-all duration-300 hover:shadow-2xl overflow-hidden"
-              >
-                <div className="relative w-full h-48 rounded-lg overflow-hidden">
-                  <img
-                    src={blog.image || defaultImg}
-                    alt={blog.title}
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                  <span className="absolute top-2 left-3 bg-pink-500 text-white px-3 py-1 text-xs font-semibold rounded-full">
-                    {blog.category}
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <h2 className="text-xl font-bold text-gray-900">{blog.title}</h2>
-                  <p className="text-gray-600 text-sm">By {blog.author} | {new Date(blog.date).toDateString()}</p>
-                  <p className="text-gray-700 mt-2">
-                    {blog.content.slice(0, 120)}...
-                    <span
-                      onClick={() => navigate(`/details/${blog.id}`)}
-                      className="text-blue-700 cursor-pointer hover:underline ml-2"
-                    >
-                      Read More
-                    </span>
-                  </p>
-                  {loggedInUser?.name === blog.author && (
-                    <div className="flex justify-between mt-2">
-                      <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-600 hover:underline">Edit</button>
-                      <button onClick={() => handleDeleteClick(blog.id)} className="text-red-600 hover:underline">Delete</button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+  <h2 className="text-4xl font-bold mb-6 text-center">
+    {showMyBlogs ? "My Blogs" : selectedCategory === "All Categories" ? "Latest Blogs" : `${selectedCategory} Blogs`}
+  </h2>
+  {filteredBlogs.length > 0 ? (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {filteredBlogs.map((blog) => (
+        <div
+          key={blog.id}
+          className="relative bg-white shadow-lg rounded-xl p-6 flex flex-col min-h-[400px] transition-all duration-300 hover:shadow-2xl overflow-hidden"
+        >
+          <div className="relative w-full h-48 rounded-lg overflow-hidden">
+            <img
+              src={blog.image || defaultImg}
+              alt={blog.title}
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <span className="absolute top-2 left-3 bg-pink-500 text-white px-3 py-1 text-xs font-semibold rounded-full">
+              {blog.category}
+            </span>
           </div>
-        ) : (
-          <p className="text-gray-600 text-center text-lg">No blogs available.</p>
-        )}
-      </section>
+          <div className="mt-2 flex-grow">
+            <h2 className="text-xl font-bold text-gray-900">{blog.title}</h2>
+            <p className="text-gray-600 text-sm">By {blog.author} | {new Date(blog.date).toDateString()}</p>
+            <p className="text-gray-700 mt-2">
+              {blog.content.slice(0, 120)}...
+              <span
+                onClick={() => navigate(`/details/${blog.id}`)}
+                className="text-blue-700 cursor-pointer hover:underline ml-2"
+              >
+                Read More
+              </span>
+            </p>
+          </div>
+
+          {loggedInUser?.name === blog.author && (
+            <div className="mt-auto pt-3 border-t border-gray-300 flex justify-between">
+              <button onClick={() => navigate(`/edit/${blog.id}`)} className="text-orange-600 hover:underline">
+                Edit
+              </button>
+              <button onClick={() => handleDeleteClick(blog.id)} className="text-red-600 hover:underline">
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-gray-600 text-center text-lg">No blogs available.</p>
+  )}
+</section>
+
 
             
  {/* footer */}
