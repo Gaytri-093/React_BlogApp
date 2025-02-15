@@ -73,18 +73,15 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full text-white px-4 py-2 rounded-lg"
-              style={{
-                backgroundColor: "#1E3A8A", // Professional deep blue
-                fontWeight: "bold",
-              }}
+              className="w-full bg-blue-300 text-blue-700 hover:bg-blue-400 font-bold px-4 py-2 rounded-lg"
+              
             >
               Login
             </button>
           </form>
           <p className="mt-4 text-center text-gray-700">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-700 font-medium hover:underline">
+            <Link to="/signup" className="text-blue-700 font-bold hover:underline">
               Sign up
             </Link>
           </p>

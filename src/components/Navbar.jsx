@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
-// Default avatar
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const Navbar = () => {
           <Link to="/">BLOG</Link>
         </h1>
 
-        {/* Navigation Links (Right-aligned) */}
+        {/* Navigation Links */}
         <div className="flex items-center space-x-6">
           <Link to="/" className="text-gray-600 hover:text-blue-700 hover:underline">
             Home
@@ -31,31 +30,30 @@ const Navbar = () => {
           <Link to="/contact" className="text-gray-600 hover:text-blue-700 hover:underline">
             Contact
           </Link>
+        </div>
 
-          {/* User Info & Logout */}
+        {/* User Info & Logout (Right-aligned) */}
+        <div className="flex items-center space-x-6">
           {loggedInUser ? (
-            <div className="flex items-center space-x-3">
-              {/* Profile Image */}
-              <FaRegUserCircle className="text-xl"/>
+            <>
+              {/* User Icon with Hover Effect */}
+              <div className="relative group">
+                <FaRegUserCircle className="text-2xl cursor-pointer text-gray-700" />
+                <div className="absolute left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+                  {loggedInUser.name || "User"}
+                </div>
+              </div>
 
-              {/* Logged-in User Name */}
-              <span className="text-gray-800 font-medium">
-                {loggedInUser.name || "User"}
-              </span>
-
-              {/* Logout Button (Text in Red) */}
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className="text-red-500 font-medium hover:underline"
+                className="text-red-500 font-medium hover:underline ml-4"
               >
                 Logout
               </button>
-            </div>
+            </>
           ) : (
-            <Link
-              to="/login"
-              className="text-green-500 font-medium hover:underline"
-            >
+            <Link to="/login" className="text-green-500 font-medium hover:underline">
               Login
             </Link>
           )}
